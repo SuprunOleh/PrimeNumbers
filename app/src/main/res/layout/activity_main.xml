@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+        android:layout_width="261dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="92dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:orientation="horizontal"
+        android:text="@string/percent_completion"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <TextView
+        android:id="@+id/lastPrime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="#090808"
+        app:layout_constraintStart_toStartOf="@+id/percentValue"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/percentValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+
+        android:textColor="#090808"
+        app:layout_constraintStart_toEndOf="@+id/percent"
+        app:layout_constraintTop_toTopOf="@+id/percent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/last_prime_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/percent" />
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="85dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="152dp"
+        android:text="@string/start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView6" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_marginStart="82dp"
+        android:layout_marginLeft="82dp"
+        android:text="@string/stop"
+        app:layout_constraintBottom_toBottomOf="@+id/btnStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btnStart"
+        app:layout_constraintTop_toTopOf="@+id/btnStart" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="38dp"
+        android:text="@string/max_value"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/inputMax"
+        android:inputType="number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="28dp"
+        android:hint="@string/input_value"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart"
+        app:layout_constraintStart_toEndOf="@+id/textView6" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
