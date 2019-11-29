@@ -13,8 +13,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import java.lang.NumberFormatException
 import java.util.concurrent.TimeUnit
+import android.widget.Toast
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    //
+    var potok = AsynsPrimeNumbers()
+    var cadr:Int = 0
 
 
 
@@ -29,9 +39,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //var potok: AsynsPrimeNumbers
-        var potok: com.gmail2548sov.primenumbersolehsuprun.AsynsPrimeNumbers
 
-        val primeNumbers: PrimeNumber
+        //var potok: com.gmail2548sov.primenumbersolehsuprun.AsynsPrimeNumbers
+
+       // val primeNumbers: PrimeNumber
 
         //эксперементируем)))
         //val btnStart: Button = findViewById(R.id.btnStart) //можно не набирать
@@ -49,18 +60,68 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //potok = AsynsPrimeNumbers()
         btnStart.setOnClickListener(this)
         btnStop.setOnClickListener((this))
+        btnReset.setOnClickListener(this)
+
+    }
+
+    fun clearing(){
+        percentValue.text = ""
+        Log.d("Us2","22222")
+        lastPrime.text = ""
+        inputMax.setText("")
+        inputMax.setHint("Input value:")
+        Log.d("Us2", "333333")
+        progressBar.setProgress(0)
 
     }
 
 
 
+
+
+
     override fun onClick(v: View) {
         //Toast.makeText(this, "Enter a positive number greater than two", Toast.LENGTH_LONG).show()
-        when (v) {
+        when (v.id) {
 
-            findViewById<Button>(R.id.btnStop) -> {AsynsPrimeNumbers().cancel(true)}
+            R.id.btnReset -> {
 
-           findViewById<Button>(R.id.btnStart) -> {
+                if(potok == null) {Log.d("Us2", "qwer $potok")
+                    return} else {Log.d("Us2", "1111$potok")
+                    potok.cancel(true)}
+
+               cadr = 1
+                clearing()
+
+
+
+
+            }
+
+
+            R.id.btnStop -> {
+
+
+
+                if(potok == null) {Log.d("Us2", "qwer $potok")
+                    return} else {Log.d("Us2", "4444$potok")
+                    potok.cancel(true)}
+                cadr = 2
+
+
+
+
+                }
+
+           R.id.btnStart -> {
+
+               Log.d("Us2","Start")
+
+
+
+               if(showStatus() == "RUNNING") return
+
+
 
 
                 if (inputMax.text.toString() == "") {
@@ -80,6 +141,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     Integer.parseInt(inputMax.text.toString())
 
                 } catch (e: NumberFormatException) {
+                    Toast.makeText(
+                        this,
+                        "Enter a positive number greater than two",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
 
                     return
                 }
@@ -99,6 +166,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 val n: Long = inputMax.text.toString().toLong()
 
+               Log.d("Us2","Start2")
+
 
                 Log.d("lll", "$n")
                 //if (n<2) {Toast.makeText(this, "Input you name", Toast.LENGTH_SHORT)
@@ -108,10 +177,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 // if (inputMaxis String) {
 
-               val potok = AsynsPrimeNumbers()
+               if (potok == null) Log.d("Us2","Start3")
 
 
-                potok.execute(n)
+              potok = AsynsPrimeNumbers()
+
+               Log.d("Us2", "Start31")
+
+               potok.execute(n)
+
+
+              /* try {potok.execute(n)}
+               catch (e: java.lang.Exception) {
+
+                   Log.d("Us2","Start3 $n")
+
+                   return
+               }*/
+
+
+
+
+
+               // if (potok!=null) return else potok.execute(n)
 
                //potok.cancel(false)
                 //btnStart.isEnabled=false
@@ -119,7 +207,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
+    private fun showStatus():String {
+        var statuspotok: String = ""
+        if (potok != null)  statuspotok =  potok.getStatus().toString()
+        return statuspotok
+    }
 
 
     inner class AsynsPrimeNumbers : AsyncTask<Long, Long, Void>() {
@@ -133,6 +225,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         override fun doInBackground(vararg params: Long?): Void? {
 
+            Log.d("Us2", "doInBack")
+
             try {
                 val n: Long = params[0] ?: 0
                 val primenumbers: ArrayList<Long> = arrayListOf(2)
@@ -145,7 +239,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     k = 0
 
                     for (j in 3..i step 2) {
-                        if (isCancelled) {Log.d("Usam","asdfff")
+                        if (isCancelled) {Log.d("Us2","asdfff")
                             return null}
                         if (j * j - 1 < i) {
                             if (i % j == 0L) {
@@ -183,6 +277,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             progressBar.setProgress(p.toInt())
             lastPrime.text = "$i"
             percentValue.text = "$p%"
+            Log.d("Us2", "444444")
 
         }
 
@@ -190,13 +285,33 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             super.onPostExecute(result)
             progressBar.setProgress(100)
             percentValue.text = "100%"
+            Log.d("Us2","onPost")
 
+
+        }
+
+        fun clearing(){
+            percentValue.text = ""
+            Log.d("Us2","22222")
+            lastPrime.text = ""
+            inputMax.setText("")
+            inputMax.setHint("Input value:")
+            Log.d("Us2", "333333")
+            progressBar.setProgress(0)
 
         }
 
         override fun onCancelled() {
             super.onCancelled()
-            percentValue.text = "7777"
+            Log.d("Us2", "fun Cancel")
+
+            when (cadr){
+                1 -> clearing()
+
+
+
+            }
+
 
 
         }

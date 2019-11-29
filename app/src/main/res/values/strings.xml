@@ -7,4 +7,5 @@
     <string name="last_prime_number">Last prime number:</string>
     <string name="percent_completion">Percent completion</string>
     <string name="input_value">Input value</string>
+    <string name="reset">Reset</string>
 </resources>
